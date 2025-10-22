@@ -32,7 +32,8 @@ def regLin(dX, dY, modo='', mxIt=10, alfa=0.01):
         lr.fit(dX, dY)
         return lr
     elif modo == 'SGD':
-        sgd = SGDRegressor(max_iter=mxIt, eta0=alfa, random_state=0)
+        #sgd = SGDRegressor(max_iter=mxIt, eta0=alfa, random_state=0)
+        sgd = SGDRegressor(max_iter=mxIt, learning_rate='constant', eta0=alfa, random_state=0)
         sgd.fit(dX, dY)
         return sgd
     else:
@@ -46,7 +47,8 @@ def regPol(dX, dY, modo='', mxIt=10, alfa=0.01, grado=2):
         lr.fit(trPoli, dY)
         return lr, poli
     elif modo == 'SGD':
-        sgd = SGDRegressor(max_iter=mxIt, eta0=alfa, random_state=0)
+        #sgd = SGDRegressor(max_iter=mxIt, eta0=alfa, random_state=0)
+        sgd = SGDRegressor(max_iter=mxIt, learning_rate='constant', eta0=alfa, random_state=0)
         sgd.fit(trPoli, dY)
         return sgd, poli
     else:
@@ -59,22 +61,18 @@ def graficador(X, y, model, titulo, poli=None):
 
     X_plot = X.values.flatten()
 
-    # Ordenar si es polinomial
     orden = X_plot.argsort()
     X_ordenado = X_plot[orden]
     y_ordenado = y.values[orden]
 
-    # Generar predicciones
     if poli:
         X_poly = poli.transform(X)
         y_pred = model.predict(X_poly)[orden]
     else:
         y_pred = model.predict(X)[orden]
 
-    # Dibujar puntos reales
     plt.scatter(X_plot, y, color='blue', label='Datos de prueba')
-
-    # Dibujar la curva o línea de predicción
+    
     plt.plot(X_ordenado, y_pred, color='red', label='Modelo predicho')
 
     plt.xlabel("X_test")
@@ -113,8 +111,8 @@ def pipeLine(data, t_test = 0.3, t_train = 0.7, escalador = 'std', modo = 'OLS',
 
 d1 = pd.read_csv("datos.csv")
 d2 = pd.read_csv("cal_housing.csv")
-mIt = 500
-al = 0.001
+mIt = 10000
+al = 0.0000001
 
 print("|"*50, "Dataset 1", "|"*50)
 pipeLine(d1, escalador='n', modo='OLS', polinomial=False)
