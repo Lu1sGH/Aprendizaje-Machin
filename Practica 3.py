@@ -97,7 +97,7 @@ def pipeLine(data, t_test = 0.3, t_train = 0.7, escalador = 'std', modo = 'OLS',
 
     if polinomial:
         modelo, poliT = regPol(tr_, trY, modo=modo, mxIt=maxIt, alfa=alfa, grado=grado)
-        y_pred = modelo.predict(poliT.transform(te_))
+        y_pred = modelo.predict(poliT.fit_transform(te_))
         graficador(te_, teY, modelo, modo, poli=poliT)
     else:
         modelo = regLin(tr_, trY, modo=modo, mxIt=maxIt, alfa=alfa)
