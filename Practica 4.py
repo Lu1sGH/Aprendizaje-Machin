@@ -107,7 +107,7 @@ accs.append(rAN)
 printReporte("EMAILS", nFolds, accs)
 
 #PRUEBA
-"""modelo = entrenarModel(tEx, tEy, modelo='Multinomial')
+modelo = entrenarModel(tEx, tEy, modelo='Multinomial')
 metricas(modelo, teEx, teEy)
 
 modelo = entrenarModel(tEx, tEy, modelo='Normal')
@@ -117,4 +117,5 @@ modelo = entrenarModel(tIx, tIy, modelo='Multinomial')
 metricas(modelo, teIx, teIy)
 
 modelo = entrenarModel(tIx, tIy, modelo='Normal')
-metricas(modelo, teIx, teIy)"""
+metricas(modelo, teIx, teIy)
+
