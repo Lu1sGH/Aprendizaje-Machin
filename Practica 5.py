@@ -45,7 +45,7 @@ def entrenarModelo(dataX, dataY, pesos=None, kFolds=3, nNeighbors=3):
 
     return bestModel, accs
 
-def metricas(model, testX, testY):
+def metricas(model, testX, testY, titulo = "Default"):
     y_pred = model.predict(testX)
     accuracy = scik.metrics.accuracy_score(testY, y_pred)
     mConf = scik.metrics.confusion_matrix(testY, y_pred)
@@ -60,6 +60,7 @@ def metricas(model, testX, testY):
 
     reporte = scik.metrics.classification_report(testY, y_pred)
     print(reporte)
+    plt.title(titulo)
     plt.show()
 
     return accuracy
@@ -95,14 +96,14 @@ bestEmail = ()
 
 print(*"-"*50, "Dataset Iris", "-"*50)
 modelo, rAN = entrenarModelo(tIx, tIy, pesos=None, kFolds=nKFolds, nNeighbors=1)
-acc = metricas(modelo, teIx, teIy)
+acc = metricas(modelo, teIx, teIy, titulo="Iris con K = 3, 1-NN y pesos ------")
 accs.append(rAN)
 modelos.append(modelo)
 
 bestIris = (1, '------', acc)
 
 modelo, rAN = entrenarModelo(tIx, tIy, pesos='uniform', kFolds=nKFolds, nNeighbors=10)
-acc = metricas(modelo, teIx, teIy)
+acc = metricas(modelo, teIx, teIy, titulo="Iris con K = 3, 10-NN y pesos uniforme")
 accs.append(rAN)
 modelos.append(modelo)
 
@@ -110,7 +111,7 @@ if bestIris[2] <= acc:
         bestIris = (10, 'uniform', acc)
 
 modelo, rAN = entrenarModelo(tIx, tIy, pesos='distance', kFolds=nKFolds, nNeighbors=10)
-acc = metricas(modelo, teIx, teIy)
+acc = metricas(modelo, teIx, teIy, titulo="Iris con K = 3, 10-NN y pesos distancia")
 accs.append(rAN)
 modelos.append(modelo)
 
@@ -123,14 +124,14 @@ print("\n"*3)
 accs = []
 print(*"-"*50, "Dataset Emails", "-"*50)
 modelo, rAN = entrenarModelo(tEx, tEy, pesos=None, kFolds=nKFolds, nNeighbors=1)
-acc = metricas(modelo, teEx, teEy)
+acc = metricas(modelo, teEx, teEy, titulo="Emails con K = 3, 1-NN y pesos ------")
 accs.append(rAN)
 modelos.append(modelo)
 
 bestEmail = (1, '-----', acc)
 
 modelo, rAN = entrenarModelo(tEx, tEy, pesos='uniform', kFolds=nKFolds, nNeighbors=10)
-acc = metricas(modelo, teEx, teEy)
+acc = metricas(modelo, teEx, teEy, titulo="Emails con K = 3, 10-NN y pesos uniforme")
 accs.append(rAN)
 modelos.append(modelo)
 
@@ -138,7 +139,7 @@ if bestEmail[2] <= acc:
     bestEmail = (10, 'uniform', acc)
 
 modelo, rAN = entrenarModelo(tEx, tEy, pesos='distance', kFolds=nKFolds, nNeighbors=10)
-acc = metricas(modelo, teEx, teEy)
+acc = metricas(modelo, teEx, teEy, titulo="Emails con K = 3, 10-NN y pesos distancia")
 accs.append(rAN)
 modelos.append(modelo)
 
@@ -156,38 +157,38 @@ print("\n"*3)
 print("="*50, "Pruebas con todo el dataset", "="*50)
 print("IRIS: ")
 modelo = entrenarModeloFullData(tIx, tIy, pesos=None, nNeighbors=1)
-acc = metricas(modelo, teIx, teIy)
+acc = metricas(modelo, teIx, teIy, titulo="Iris con 1-NN y pesos ------")
 
 if bestIris[2] <= acc:
     bestIris = (1, '----- FD', acc)
 
 modelo = entrenarModeloFullData(tIx, tIy, pesos='uniform', nNeighbors=10)
-acc = metricas(modelo, teIx, teIy)
+acc = metricas(modelo, teIx, teIy, titulo="Iris con 10-NN y pesos uniforme")
 
 if bestIris[2] <= acc:
     bestIris = (10, 'uniform FD', acc)
 
 modelo = entrenarModeloFullData(tIx, tIy, pesos='distance', nNeighbors=10)
-acc = metricas(modelo, teIx, teIy)
+acc = metricas(modelo, teIx, teIy, titulo="Iris con 10-NN y pesos distancia")
 
 if bestIris[2] <= acc:
     bestIris = (10, 'distance FD', acc)
 
 print("EMAILS: ")
 modelo = entrenarModeloFullData(tEx, tEy, pesos=None, nNeighbors=1)
-acc = metricas(modelo, teEx, teEy)
+acc = metricas(modelo, teEx, teEy, titulo="Emails con 1-NN y pesos ------")
 
 if bestEmail[2] <= acc:
     bestEmail = (1, '----- FD', acc)
 
 modelo = entrenarModeloFullData(tEx, tEy, pesos='uniform', nNeighbors=10)
-acc = metricas(modelo, teEx, teEy)
+acc = metricas(modelo, teEx, teEy, titulo="Emails con 10-NN y pesos uniforme")
 
 if bestEmail[2] <= acc:
     bestEmail = (10, 'uniform FD', acc)
 
 modelo = entrenarModeloFullData(tEx, tEy, pesos='distance', nNeighbors=10)
-acc = metricas(modelo, teEx, teEy)
+acc = metricas(modelo, teEx, teEy, titulo="Emails con 10-NN y pesos distancia")
 
 if bestEmail[2] <= acc:
     bestEmail = (10, 'distance FD', acc)
